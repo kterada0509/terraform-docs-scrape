@@ -34,8 +34,9 @@ interface IFieldDef {
 }
 
 let providers: IProvider[] = new Array<IProvider>();
-providers.push({ name: "terraform-provider-aws", url: `${terraformBaseUrl}/docs/providers/aws/index.html` });
+providers.push({name: "terraform-provider-aws", url: `${terraformBaseUrl}/docs/providers/aws/index.html`});
 providers.push({name: "terraform-provider-azurerm", url: `${terraformBaseUrl}/docs/providers/azurerm/index.html`});
+providers.push({name: "terraform-provider-datadog", url: `${terraformBaseUrl}/docs/providers/datadog/index.html`});
 providers.push({name: "terraform-provider-google", url: `${terraformBaseUrl}/docs/providers/google/index.html`});
 
 const fieldRegex: RegExp = new RegExp(/^[a-z](?:_?[a-z0-9]+)*$/);
@@ -355,6 +356,7 @@ function parseResourcePageAttrs($: CheerioStatic): IFieldDef[] {
 
 Promise.all(providers.map(getProviderPage)).then((results) => {
     results.forEach((v) => {
+        console.log('getProviderPage: ', v.provider.name)
         Promise.all(parseProvdierPage(v.result, v.provider)).then((d) => {
             var data: { [key: string]: IResource } = d.filter((t) => t.type === "data_source").reduce((obj, item) => {
                 obj[item.name] = item;

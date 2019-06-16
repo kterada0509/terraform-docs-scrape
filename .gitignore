@@ -5,3 +5,4 @@ node_modules/*
 terraform-provider-aws/*
 terraform-provider-azurerm/*
 terraform-provider-google/*
+terraform-provider-datadog/*
